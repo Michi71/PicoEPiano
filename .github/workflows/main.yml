@@ -12,9 +12,9 @@ jobs:
       run: |   
            git config --global user.email "m.geerken@address-solutions.de"
            git config --global user.name "Michi71"
-           git submodule add https://github.com/raspberrypi/pico-extras.git pico-extras
+           git submodule add https://github.com/raspberrypi/pico-extras.git lib/pico-extras
            git submodule init
            git submodule update
-           git add .gitmodules pico-extras
+           git add .gitmodules lib/pico-extras
            git commit -m 'Added <repository> as a submodule'
-           git push --mirror https://github.com/Michi71/PicoEPiano/lib
+           git push --mirror https://github.com/Michi71/PicoEPiano
