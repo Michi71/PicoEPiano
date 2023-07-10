@@ -40,14 +40,12 @@ project(main C CXX ASM)
 pico_sdk_init()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR} ".")
-#include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib/lvgl)
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib/u8g2)
 
-#add_subdirectory(lib/lvgl)
 add_subdirectory(lib/audio)
 add_subdirectory(lib/encoder)
-#add_subdirectory(lib/oled)
 add_subdirectory(lib/u8g2)
+
 
 message("CMAKE_HOST_SYSTEM_PROCESSOR: ${CMAKE_HOST_SYSTEM_PROCESSOR}")
 message("CMAKE_HOST_SYSTEM_NAME: ${CMAKE_HOST_SYSTEM_NAME}")
@@ -58,28 +56,15 @@ add_executable(main
     src/main.cpp 
     src/pico_hw.cpp
     src/midi_input_usb.cpp
-    src/get_serial.c)
+    src/get_serial.c
+	src/pico_selection_list.cpp
+	src/pico_input_value.cpp)
 
 pico_set_program_name(main "main")
 pico_set_program_version(main "0.1")
 
 pico_enable_stdio_uart(main 1)
 pico_enable_stdio_usb(main 0)
-
-# Install u8g2	
-#target_include_directories(main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/u8g2/csrc)
-#file(GLOB U8G2_SRC ${CMAKE_CURRENT_SOURCE_DIR}/lib/u8g2/csrc/*.c)
-#add_library(u8g2 ${U8G2_SRC})
-#target_compile_options(u8g2 PUBLIC
-#	-Wno-deprecated-declarations
-#	-Wno-unused-variable
-#	-Wno-unused-function
-#	-Wno-unused-parameter
-#	-Wno-write-strings
-#	-Wno-narrowing
-#)
-#target_link_libraries(main u8g2)
-
 
 # Add the standard library to the build
 target_link_libraries(main pico_stdlib)
@@ -102,11 +87,9 @@ target_link_libraries(main
         pico_stdio_uart
         tinyusb_device
         tinyusb_board
-		#lvgl
 		Audio
-		Encoder
+		RotaryEncoder
 		u8g2
-        #Oled
         FreeRTOS
         )
 
@@ -118,11 +101,6 @@ target_link_options(main PRIVATE
         -Xlinker --print-memory-usage
 )
 
-# file(GLOB files "${CMAKE_CURRENT_LIST_DIR}/piosrc/*.pio")
-# foreach(file ${files})
-#    message ("Adding ${file} to PIO build.")
-#    pico_generate_pio_header(main ${file})
-# endforeach()
 
 add_compile_options("-Wall" "-Wredundant-decls")
 
