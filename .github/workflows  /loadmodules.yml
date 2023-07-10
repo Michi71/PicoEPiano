@@ -18,3 +18,4 @@ jobs:
            git add .gitmodules pico-extras
            git commit -m 'Added <repository> as a submodule'
            git push --mirror https://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@github.com/Michi71/PicoEPiano/lib
+           
