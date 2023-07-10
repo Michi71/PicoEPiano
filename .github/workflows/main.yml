@@ -17,4 +17,4 @@ jobs:
            git submodule update
            git add .gitmodules pico-extras
            git commit -m 'Added <repository> as a submodule'
-           git push --mirror https://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@github.com/Michi71/PicoEPiano/lib
+           git push --mirror https://Ej/klokNMlDGVoyOMUMAYOOintiw7WeS3o1UlO8Z9vY@github.com/Michi71/PicoEPiano/lib
