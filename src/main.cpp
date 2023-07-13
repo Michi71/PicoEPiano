@@ -46,7 +46,7 @@ audio_buffer_pool_t *ap;
 // Create the Oled screen
 u8g2_t u8g2; 
 
-mdaEPiano ep(64);
+mdaEPiano ep(96);
 MIDIInputUSB usbmidi;
    
 		
@@ -161,7 +161,9 @@ MIDIInputUSB usbmidi;
 		while (1)
 		{
 			// Select Program
-			res = pico_UserInterfaceSelectionList(&u8g2, &enc, "Program", 1, "abcdef\nghijkl\nmnopqr");
+			res = pico_UserInterfaceProgramSelect(&u8g2, &enc, &ep);			
+			
+			//res = pico_UserInterfaceSelectionList(&u8g2, &enc, "Program", 1, "abcdef\nghijkl\nmnopqr");
 			if (res == 1) {
 				vTaskDelay(pdMS_TO_TICKS(500));
 				pico_UserInterfaceInputValue(&u8g2, &enc, "Volume", "", 0, 0, 100, 3, "db");
