@@ -37,7 +37,7 @@
 #define NPARAMS 12       //number of parameters
 #define NPROGS   5       //number of programs
 #define NOUTS    2       //number of outputs
-#define NVOICES 64       //max polyphony
+#define NVOICES 96       //max polyphony
 #define SUSTAIN 128
 #define SILENCE 0.0001f  //voice choking
 #define WAVELEN 422414   //wave data bytes
@@ -118,6 +118,7 @@ public:
     uint8_t getVolume(void);
     
 	int32_t getProgramCount();
+	int32_t getProgram();
 	void setProgram(int32_t program);
 	void setProgramName(char *name);
 	void getProgramName(char *name);
