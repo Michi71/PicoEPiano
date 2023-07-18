@@ -59,7 +59,8 @@ add_executable(main
     src/get_serial.c
 	src/pico_selection_list.cpp
 	src/pico_input_value.cpp
-	src/pico_program_select.cpp)
+	src/pico_program_select.cpp
+	src/pico_param_select.cpp)
 
 pico_set_program_name(main "main")
 pico_set_program_version(main "0.1")
