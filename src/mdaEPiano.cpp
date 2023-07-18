@@ -153,7 +153,7 @@ void mdaEPiano::update()  //parameter change
   if(param[6] < 0.25f) velsens -= 0.75f - 3.0f * param[6];
 
   width = 0.03f * param[7];
-  poly = 1 + (int32_t)(31.0f * param[8]);
+  poly = 1 + (int32_t)((max_polyphony-1) * param[8]);
   fine = param[9] - 0.5f;
   random = 0.077f * param[10];
   stretch = 0.0f; //0.000434f * (param[11] - 0.5f); parameter re-used for overdrive!
