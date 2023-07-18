@@ -287,6 +287,7 @@ void mdaEPiano::fillpatch(int32_t p, const char *name, float p0, float p1, float
 
 
 int32_t mdaEPiano::getProgramCount() { return NPROGS; }
+int32_t mdaEPiano::getProgram() { return curProgram; }
 int32_t mdaEPiano::getParameterCount() { return NPARAMS; }
 float mdaEPiano::getParameter(int32_t index)  { return programs[curProgram].param[index]; }
 void  mdaEPiano::setProgramName(char *name)   { strcpy(programs[curProgram].name, name); }
@@ -366,7 +367,6 @@ void mdaEPiano::getParameterLabel(int32_t index, char *label)
     default: strcpy(label, "%");
   }
 }
-
 
 void mdaEPiano::guiGetDisplay(int32_t index, char *label)
 {

@@ -258,11 +258,9 @@ uint8_t pico_UserInterfaceSelectionList(u8g2_t *u8g2, RotaryEncoder *enc, const 
         yy = u8g2_GetAscent(u8g2);
         if ( title_lines > 0 )
         {
-          yy += u8g2_DrawUTF8Lines(u8g2, 0, yy, u8g2_GetDisplayWidth(u8g2), line_height, title);
-		
-	  u8g2_DrawHLine(u8g2, 0, yy-line_height- u8g2_GetDescent(u8g2) + 1, u8g2_GetDisplayWidth(u8g2));
-		
-	  yy += 3;
+			yy += u8g2_DrawUTF8Lines(u8g2, 0, yy, u8g2_GetDisplayWidth(u8g2), line_height, title);		
+			u8g2_DrawHLine(u8g2, 0, yy-line_height- u8g2_GetDescent(u8g2) + 1, u8g2_GetDisplayWidth(u8g2));	
+			yy += 3;
         }
         u8g2_DrawSelectionList(u8g2, &u8sl, yy, sl);
       } while( u8g2_NextPage(u8g2) );

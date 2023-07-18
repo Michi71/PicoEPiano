@@ -91,7 +91,7 @@ uint8_t pico_UserInterfaceProgramSelect(u8g2_t *u8g2, RotaryEncoder *enc, mdaEPi
   u8g2_uint_t  y, yy;
   u8g2_uint_t  x, xx;
   
-  uint8_t local_value = 0;
+  uint8_t local_value = ep->getProgram();
   //uint8_t r; /* not used ??? */
   uint8_t event;
   int32_t delta;
@@ -106,7 +106,7 @@ uint8_t pico_UserInterfaceProgramSelect(u8g2_t *u8g2, RotaryEncoder *enc, mdaEPi
   y = u8g2_GetAscent(u8g2);
   x = 0;
   
-  ep->setProgram(local_value);
+ // ep->setProgram(local_value);
   /* event loop */
   for(;;)
   {
