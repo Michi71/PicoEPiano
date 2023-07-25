@@ -217,6 +217,7 @@ uint8_t pico_UserInterfaceSelectionList(u8g2_t *u8g2, Encoder *enc, PushButton *
 
   uint8_t title_lines = u8x8_GetStringLineCnt(title);
   uint8_t display_lines;
+  int32_t start;
 
   
   if ( start_pos > 0 )	/* issue 112 */
@@ -260,6 +261,8 @@ uint8_t pico_UserInterfaceSelectionList(u8g2_t *u8g2, Encoder *enc, PushButton *
         }
         u8g2_DrawSelectionList(u8g2, &u8sl, yy, sl);
       } while( u8g2_NextPage(u8g2) );
+	  
+	  start = to_ms_since_boot(get_absolute_time());
 
       for(;;)
       {
@@ -267,12 +270,20 @@ uint8_t pico_UserInterfaceSelectionList(u8g2_t *u8g2, Encoder *enc, PushButton *
 	    delta = enc->delta();
 		
 		if(delta != 0) {
+			start = to_ms_since_boot(get_absolute_time());
 			if(delta > 0) {
 				u8sl_Next(&u8sl);
 				break;
 			} else {
 				u8sl_Prev(&u8sl);
 				break;
+			}
+		}
+		
+		if (delta == 0) {
+			if (to_ms_since_boot(get_absolute_time()) - start > 5000)
+			{
+				return -1;	
 			}
 		}
 		

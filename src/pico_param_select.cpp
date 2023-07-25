@@ -27,7 +27,7 @@ uint8_t pico_UserInterfaceParamSelect(u8g2_t *u8g2, Encoder *enc, PushButton *bt
 	
 	int res = pico_UserInterfaceSelectionList(u8g2, enc, bt, "Parameter", 0, buf);
 	
-	if (res > count - 1) res = -1;
+	if (res > count) res = -1;
 	return (res);	
 }
 
@@ -44,6 +44,7 @@ uint8_t pico_UserInterfaceParamInput(u8g2_t *u8g2, Encoder *enc, PushButton *bt,
 	float local_value = ep->getParameter(paramIndex);
 	float old_value = local_value;
 	int32_t delta;
+	int32_t start;
 	
 	char title[24];
 	char label[24];
@@ -113,6 +114,8 @@ uint8_t pico_UserInterfaceParamInput(u8g2_t *u8g2, Encoder *enc, PushButton *bt,
 			u8g2_DrawUTF8(u8g2, xx, yy, label);			
 		} while( u8g2_NextPage(u8g2) );
 		
+		start = to_ms_since_boot(get_absolute_time());
+		
 		for(;;)
 		{
 			delta = enc->delta();
@@ -122,6 +125,7 @@ uint8_t pico_UserInterfaceParamInput(u8g2_t *u8g2, Encoder *enc, PushButton *bt,
 			}
 			else if (delta > 0)
 			{
+				start = to_ms_since_boot(get_absolute_time());
 				local_value += step;								
 				if ( local_value >= hi )
 					local_value = hi;
@@ -129,11 +133,20 @@ uint8_t pico_UserInterfaceParamInput(u8g2_t *u8g2, Encoder *enc, PushButton *bt,
 			}
 			else if (delta < 0)
 			{
+				start = to_ms_since_boot(get_absolute_time());
 				local_value -= step;
 				if ( local_value <= lo )
 					local_value = lo;				  
 				break;
 			}       			
+			
+			if (delta == 0) {
+				if (to_ms_since_boot(get_absolute_time()) - start > 5000)
+				{
+					return -1;	
+				}
+			}
+		
 		}
 	}
   
