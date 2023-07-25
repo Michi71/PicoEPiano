@@ -36,7 +36,7 @@ RotaryEncoder::RotaryEncoder(PIO pio, uint sm, uint rotary_encoder_A)
 // get the current rotation
 int RotaryEncoder::get_rotation(void)
 {
-	rotation = rotary_encoder_get_count(_pio, _sm) / 10;
+	rotation = rotary_encoder_get_count(_pio, _sm) / 8;
     delta = rotation - old_rotation;
     old_rotation = rotation;
 	return rotation;
@@ -45,7 +45,7 @@ int RotaryEncoder::get_rotation(void)
 // get the current delta
 int RotaryEncoder::get_delta(void)
 {
-	rotation = rotary_encoder_get_count(_pio, _sm) / 10;
+	rotation = rotary_encoder_get_count(_pio, _sm) / 8;
     delta = rotation - old_rotation;
     old_rotation = rotation;
 	return delta;
