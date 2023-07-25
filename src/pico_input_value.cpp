@@ -33,8 +33,6 @@
   
 */
 
-#include "u8g2.h"
-#include "rotary_encoder.h"
 #include "pico_userinterface.h"
 
 /*
@@ -43,7 +41,7 @@
     1: value has been updated
 */
 
-uint8_t pico_UserInterfaceInputValue(u8g2_t *u8g2, RotaryEncoder *enc, const char *title, const char *pre, uint8_t *value, uint8_t lo, uint8_t hi, uint8_t digits, const char *post)
+uint8_t pico_UserInterfaceInputValue(u8g2_t *u8g2, Encoder *enc, PushButton *bt, const char *title, const char *pre, uint8_t *value, uint8_t lo, uint8_t hi, uint8_t digits, const char *post)
 {
   uint8_t line_height;
   uint8_t height;
@@ -119,8 +117,8 @@ uint8_t pico_UserInterfaceInputValue(u8g2_t *u8g2, RotaryEncoder *enc, const cha
     
     for(;;)
     {
-	  delta = enc->get_delta();
-      if  (enc->get_button() == 0)
+	  delta = enc->delta();
+      if (bt->ReadButton() == PushButton::PRESSED)
       {
 		*value = local_value;
 		return 1;

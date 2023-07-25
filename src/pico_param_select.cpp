@@ -1,5 +1,3 @@
-#include "u8g2.h"
-#include "rotary_encoder.h"
 #include "pico_userinterface.h"
 
 #include "mdaEPiano.h"
@@ -10,7 +8,7 @@ extern "C"
 {
 #endif
 
-uint8_t pico_UserInterfaceParamSelect(u8g2_t *u8g2, RotaryEncoder *enc, mdaEPiano *ep)
+uint8_t pico_UserInterfaceParamSelect(u8g2_t *u8g2, Encoder *enc, PushButton *bt, mdaEPiano *ep)
 {
 	int32_t count = ep->getParameterCount();
 	
@@ -27,14 +25,14 @@ uint8_t pico_UserInterfaceParamSelect(u8g2_t *u8g2, RotaryEncoder *enc, mdaEPian
 	}
 	strcat(buf, "<< BACK");
 	
-	int res = pico_UserInterfaceSelectionList(u8g2, enc, "Parameter", 0, buf);
+	int res = pico_UserInterfaceSelectionList(u8g2, enc, bt, "Parameter", 0, buf);
 	
 	if (res > count - 1) res = -1;
 	return (res);	
 }
 
 
-uint8_t pico_UserInterfaceParamInput(u8g2_t *u8g2, RotaryEncoder *enc, mdaEPiano *ep, uint32_t paramIndex)
+uint8_t pico_UserInterfaceParamInput(u8g2_t *u8g2, Encoder *enc, PushButton *bt, mdaEPiano *ep, uint32_t paramIndex)
 {
 	uint8_t line_height;
 	uint8_t height;
@@ -117,8 +115,8 @@ uint8_t pico_UserInterfaceParamInput(u8g2_t *u8g2, RotaryEncoder *enc, mdaEPiano
 		
 		for(;;)
 		{
-			delta = enc->get_delta();
-			if  (enc->get_button() == 0)
+			delta = enc->delta();
+			if (bt->ReadButton() == PushButton::PRESSED)
 			{
 				return 1;
 			}

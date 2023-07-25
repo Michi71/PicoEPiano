@@ -37,10 +37,6 @@
 
 #include "pico_userinterface.h"
 
-#include "u8g2.h"
-#include "rotary_encoder.h"
-
-
 #define MY_BORDER_SIZE 1
 
 /*
@@ -209,7 +205,7 @@ extern "C"
 {
 #endif
 
-uint8_t pico_UserInterfaceSelectionList(u8g2_t *u8g2, RotaryEncoder *enc, const char *title, uint8_t start_pos, const char *sl)
+uint8_t pico_UserInterfaceSelectionList(u8g2_t *u8g2, Encoder *enc, PushButton *bt, const char *title, uint8_t start_pos, const char *sl)
 {
   u8sl_t u8sl;
   u8g2_uint_t yy;
@@ -268,7 +264,7 @@ uint8_t pico_UserInterfaceSelectionList(u8g2_t *u8g2, RotaryEncoder *enc, const 
       for(;;)
       {
 		  
-	    delta = enc->get_delta();
+	    delta = enc->delta();
 		
 		if(delta != 0) {
 			if(delta > 0) {
@@ -280,7 +276,7 @@ uint8_t pico_UserInterfaceSelectionList(u8g2_t *u8g2, RotaryEncoder *enc, const 
 			}
 		}
 		
-		if (enc->get_button() == 0)
+		if (bt->ReadButton() == PushButton::PRESSED)
 			return u8sl.current_pos+1;	
       }
   }

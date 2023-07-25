@@ -1,5 +1,3 @@
-#include "u8g2.h"
-#include "rotary_encoder.h"
 #include "pico_userinterface.h"
 
 #include "mdaEPiano.h"
@@ -86,7 +84,7 @@ extern "C"
 {
 #endif
 
-uint8_t pico_UserInterfaceProgramSelect(u8g2_t *u8g2, RotaryEncoder *enc, mdaEPiano *ep)
+uint8_t pico_UserInterfaceProgramSelect(u8g2_t *u8g2, Encoder *enc, PushButton *bt, mdaEPiano *ep)
 {
   u8g2_uint_t  y, yy;
   u8g2_uint_t  x, xx;
@@ -133,8 +131,8 @@ uint8_t pico_UserInterfaceProgramSelect(u8g2_t *u8g2, RotaryEncoder *enc, mdaEPi
         
     for(;;)
     {
-	  delta = enc->get_delta();
-      if  (enc->get_button() == 0)
+	  delta = enc->delta();
+      if (bt->ReadButton() == PushButton::PRESSED)
       {
 		return local_value;
       }

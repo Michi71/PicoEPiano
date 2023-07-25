@@ -7,7 +7,8 @@
 
 #include "u8g2.h"
 
-#include "rotary_encoder.h"
+#include "encoder.h"
+#include "push_button.h"
 #include "pico_userinterface.h"
 //#include "image.h"
 
@@ -29,7 +30,9 @@ extern "C"
 {
 #endif
 
-RotaryEncoder enc(pio1, 0, PIN_ENC_A);
+//RotaryEncoder enc(pio1, 0, PIN_ENC_A);
+Encoder enc(pio1, 0, {PIN_ENC_A, PIN_ENC_B});
+PushButton bt(PIN_ENC_BTN, 50);
 
 static int8_t ParamChange = 0;
 
@@ -125,20 +128,20 @@ MIDIInputUSB usbmidi;
         u8g2_ClearBuffer(&u8g2);
         u8g2_ClearDisplay(&u8g2);
 		u8g2_SetDrawColor(&u8g2, 1);		
-		u8g2_SetFont(&u8g2, u8g2_font_luBS10_tf  );		
+		u8g2_SetFont(&u8g2, u8g2_font_luBS10_tf);		
 		
 		while (1)
 		{
 			// Select Program
-			res = pico_UserInterfaceProgramSelect(&u8g2, &enc, &ep);
+			res = pico_UserInterfaceProgramSelect(&u8g2, &enc, &bt, &ep);
 			
 			while (res > -1) {
 				vTaskDelay(pdMS_TO_TICKS(500));
-				res = pico_UserInterfaceParamSelect(&u8g2, &enc, &ep);
+				res = pico_UserInterfaceParamSelect(&u8g2, &enc, &bt, &ep);
 				if (res > -1)
 				{
 					vTaskDelay(pdMS_TO_TICKS(500));
-					pico_UserInterfaceParamInput(&u8g2, &enc, &ep, res-1);
+					pico_UserInterfaceParamInput(&u8g2, &enc, &bt, &ep, res-1);
 				}
 			}
 			
@@ -150,6 +153,9 @@ MIDIInputUSB usbmidi;
     {
         // initialize the hardware
         pico_init();
+		
+		bt.Init();
+		enc.init();
 
         // Initialize the audio subsystem
         ap = init_audio();
