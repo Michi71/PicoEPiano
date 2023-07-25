@@ -7,7 +7,7 @@
 #define PIN_I2S_BCK   10
 #define PIN_I2S_WS    11
 
-#define  PIN_ENC_BTN  19
+#define  PIN_ENC_BTN  13
 #define  PIN_ENC_A    20
 #define  PIN_ENC_B    21
 
