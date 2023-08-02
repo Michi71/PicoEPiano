@@ -1,7 +1,7 @@
 name: Build Firmware
 
 #on: [workflow_dispatch]
-on: [push]
+on: [push, pull_request]
 
 env:
   CMAKE_VERSION: 3.23.0
@@ -260,8 +260,7 @@ jobs:
         allowUpdates: true
         omitBody: true
         removeArtifacts: true
-        artifacts: ${{ matrix.config.artifact }}
-        skipIfReleaseExists: true
+        skipIfReleaseExists: false
 
     - name: Store Release url
       run: |
