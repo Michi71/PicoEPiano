@@ -11,8 +11,6 @@ set(PICO_EXTRAS_PATH "../lib/pico-extras")
 include(pico_sdk_import.cmake)
 include(pico_extras_import.cmake)
 
-# set(PICO_BOARD datanoisetv_rp2040_dsp)
-# set(PICO_BOARD waveshare_rp2040_plus_16mb)
 set(PICO_BOARD pico)
 
 set(FREERTOS_SRC_DIRECTORY "${PICO_SDK_PATH}/lib/tinyusb/lib/FreeRTOS-Kernel")
