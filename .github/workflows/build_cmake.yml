@@ -260,6 +260,7 @@ jobs:
         omitBody: true
         removeArtifacts: true
         artifacts: ${{ matrix.config.artifact }}
+        skipIfReleaseExists: true
 
     - name: Store Release url
       run: |
