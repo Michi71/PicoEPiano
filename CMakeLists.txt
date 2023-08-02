@@ -42,9 +42,7 @@ pico_sdk_init()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR} ".")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib/u8g2)
 
-#add_subdirectory(lib/flash)
 add_subdirectory(lib/audio)
-#add_subdirectory(lib/eeprom)
 add_subdirectory(lib/encoder)
 add_subdirectory(lib/u8g2)
 
