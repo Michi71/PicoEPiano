@@ -254,6 +254,7 @@ jobs:
       with:
         tag: ${{ github.ref }}
         name: Release ${{ github.ref }}
+        commit: main
         draft: false
         prerelease: false
         allowUpdates: true
