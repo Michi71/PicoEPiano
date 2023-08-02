@@ -26,14 +26,17 @@
 
 #include <stdio.h>
 #include <math.h>
+//#include "eeprom.h"
 
 mdaEPiano::mdaEPiano(uint8_t nvoices) // mdaEPiano::mdaEPiano(audioMasterCallback audioMaster) : AudioEffectX(audioMaster, NPROGS, NPARAMS)
 {
+  uint8_t buf[256];
   Fs = SAMPLING_RATE; iFs = 1.0f / Fs; //just in case...
 
   max_polyphony=nvoices;
   voice=new VOICE[max_polyphony];
 
+ // EEPROM.begin(2048);	// Start 2k eeprom emulation
   programs = new mdaEPianoProgram[NPROGS];
   if(programs)
   {
@@ -43,7 +46,14 @@ mdaEPiano::mdaEPiano(uint8_t nvoices) // mdaEPiano::mdaEPiano(audioMasterCallbac
     fillpatch(i++, "Bright", 0.500f, 0.500f, 1.000f, 0.800f, 0.500f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.146f, 0.500f);
     fillpatch(i++, "Mellow", 0.500f, 0.500f, 0.000f, 0.000f, 0.500f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.246f, 0.000f);
     fillpatch(i++, "Autopan", 0.500f, 0.500f, 0.500f, 0.500f, 0.250f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.246f, 0.000f);
-    fillpatch(i++, "Tremolo", 0.500f, 0.500f, 0.500f, 0.500f, 0.750f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.246f, 0.000f);
+    fillpatch(i++, "Tremolo", 0.500f, 0.500f, 0.500f, 0.500f, 0.750f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.246f, 0.000f);	
+	
+	/*fillpatch(i++, "User 1", 0.500f, 0.500f, 0.500f, 0.500f, 0.500f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.146f, 0.000f);
+	fillpatch(i++, "User 2", 0.500f, 0.500f, 0.500f, 0.500f, 0.500f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.146f, 0.000f);
+	fillpatch(i++, "User 3", 0.500f, 0.500f, 0.500f, 0.500f, 0.500f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.146f, 0.000f);
+	fillpatch(i++, "User 4", 0.500f, 0.500f, 0.500f, 0.500f, 0.500f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.146f, 0.000f);
+	fillpatch(i, "User 5", 0.500f, 0.500f, 0.500f, 0.500f, 0.500f, 0.650f, 0.250f, 0.500f, 1.0f, 0.500f, 0.146f, 0.000f);*/
+
     setProgram(0);
   }
 
@@ -263,9 +273,23 @@ void mdaEPiano::setProgram(int32_t program)
 	}
 }
 
+void mdaEPiano::flashWriteProgram()
+{
+	;
+	;
+}
 
+int mdaEPiano::flashReadProgram(int32_t p)
+{
+	;
+	;
+	return 1;
+}
+	
 void mdaEPiano::setParameter(int32_t index, float value)
 {
+  
+  
   programs[curProgram].param[index] = value;
   update();
 

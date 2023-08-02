@@ -120,8 +120,11 @@ public:
 	int32_t getProgramCount();
 	int32_t getProgram();
 	void setProgram(int32_t program);
+	void flashWriteProgram();
+	int flashReadProgram(int32_t p);
 	void setProgramName(char *name);
 	void getProgramName(char *name);
+	bool copyProgram (int32_t destination);
 	
 	int32_t getParameterCount();
 	void setParameter(int32_t index, float value);
@@ -131,8 +134,6 @@ public:
 	void getParameterName(int32_t index, char *text);
 	void setSampleRate(float sampleRate);
 	void setBlockSize(int32_t blockSize);
-
-	bool copyProgram (int32_t destination);
 
 	int32_t guiUpdate;
 	void guiGetDisplay(int32_t index, char *label);

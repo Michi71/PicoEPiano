@@ -42,7 +42,9 @@ pico_sdk_init()
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR} ".")
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib/u8g2)
 
+#add_subdirectory(lib/flash)
 add_subdirectory(lib/audio)
+#add_subdirectory(lib/eeprom)
 add_subdirectory(lib/encoder)
 add_subdirectory(lib/u8g2)
 
@@ -62,8 +64,8 @@ add_executable(main
 	src/pico_program_select.cpp
 	src/pico_param_select.cpp)
 
-pico_set_program_name(main "main")
-pico_set_program_version(main "0.1")
+pico_set_program_name(main "PicoEPiano")
+pico_set_program_version(main "Version 0.1")
 
 pico_enable_stdio_uart(main 1)
 pico_enable_stdio_usb(main 0)

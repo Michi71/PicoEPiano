@@ -110,6 +110,7 @@ void u8g2_DrawUTF8Line(u8g2_t *u8g2, u8g2_uint_t x, u8g2_uint_t y, u8g2_uint_t w
 
   /* draw the text */
   u8g2_DrawUTF8(u8g2, x+d, y, s);
+  //u8g2_DrawUTF8(u8g2, 2, y, s);
 
   /* revert draw color */
   u8g2_SetDrawColor(u8g2, 1);

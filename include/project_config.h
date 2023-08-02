@@ -11,6 +11,8 @@
 #define  PIN_ENC_A    20
 #define  PIN_ENC_B    21
 
+#define  PIN_LED	  25
+
 #define PIN_OLED_SDA  2
 #define PIN_OLED_SCL  3
 
