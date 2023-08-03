@@ -22,17 +22,17 @@ The pins for connecting the hardware to the pico are defined in the /includes/pr
 ```bash
 #define PIN_MIDI_RX 5
 
-#define PIN_I2S_DOUT  9
+#define PIN_I2S_DOUT  9        // i2s sound module
 #define PIN_I2S_BCK   10
 #define PIN_I2S_WS    11
 
-#define  PIN_ENC_BTN  13
+#define  PIN_ENC_BTN  13      // Rotary Encoder
 #define  PIN_ENC_A    20
 #define  PIN_ENC_B    21
 
-#define  PIN_LED      25
+#define  PIN_LED      25      // Onboard LED
 
-#define PIN_OLED_SDA  2
+#define PIN_OLED_SDA  2        // I2C for the OLED
 #define PIN_OLED_SCL  3
 ```
 
