@@ -4,6 +4,9 @@ This Repository is a work in progress and may not build or compile. It does not 
 
 # PicoEPiano - A Raspberry Pi Pico RP2040 Electric Piano Synthesizer
 
+The firmware is build around the famous software sampler VST MDA ePiano. At the moment the max. polyphony is set to 96 instead of 8 in the original software.
+
+
 ## Hardware Components
 
 - Raspberry PI Pico
@@ -14,8 +17,7 @@ This Repository is a work in progress and may not build or compile. It does not 
 
 ## Software Components
 
-The firmware is build around the famous software sampler VST MDA ePiano. The basic sceleton for the i2s sound output, freeRTOS tasks and USB midi input are taken from the PicoADK project (https://github.com/DatanoiseTV/PicoADK-Firmware-Template.git). The RP2040 is overclocked to 402MHz. At the moment the max. polyphony is set to 96 instead of 8 in the original software.
-
+The basic sceleton for the i2s sound output, freeRTOS tasks and USB midi input are taken from the PicoADK project (https://github.com/DatanoiseTV/PicoADK-Firmware-Template.git). The RP2040 is overclocked to 402MHz. 
 ## Compiling the firmware 
 ```bash
 git clone --recursive https://github.com/Michi71/PicoEPiano.git picoepiano
