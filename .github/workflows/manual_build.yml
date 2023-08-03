@@ -1,0 +1,16 @@
+name: Manual build workflow
+
+on:
+  workflow_dispatch:
+        
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Build worklflow
+      run: |   
+           git config --global user.email "m.geerken@address-solutions.de"
+           git config --global user.name "Michi71"
+           git tag -a v0.1 -m "Release v0.1"
+           git push origin v0.1
