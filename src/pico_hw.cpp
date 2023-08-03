@@ -58,13 +58,6 @@ void pico_init()
         board_init();
         tusb_init();
         stdio_init_all();
-        
-        // Initialize I2C
-       /* i2c_init(i2c1, 400*1000);
-        gpio_set_function(PIN_OLED_SDA, GPIO_FUNC_I2C);
-        gpio_set_function(PIN_OLED_SCL, GPIO_FUNC_I2C);
-        gpio_pull_up(PIN_OLED_SDA);
-        gpio_pull_up(PIN_OLED_SCL);*/
 	
         // LED on GPIO25
         gpio_init(PIN_LED);
