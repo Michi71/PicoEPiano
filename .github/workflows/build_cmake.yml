@@ -1,7 +1,7 @@
 name: Build Firmware
 
-on: [workflow_dispatch]
-#on: [push, pull_request]
+#on: [workflow_dispatch]
+on: [push, pull_request]
 
 env:
   CMAKE_VERSION: 3.23.0
