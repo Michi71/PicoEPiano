@@ -1,4 +1,4 @@
-name: Build Firmware
+name: Build and Release Firmware
 
 on: [workflow_dispatch]
 #on: [push, pull_request]
