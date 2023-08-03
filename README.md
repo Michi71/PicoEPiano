@@ -30,13 +30,10 @@ The pins for connecting the hardware to the pico are defined in the /includes/pr
 #define  PIN_ENC_A    20
 #define  PIN_ENC_B    21
 
-#define  PIN_LED	  25
+#define  PIN_LED      25
 
 #define PIN_OLED_SDA  2
 #define PIN_OLED_SCL  3
-
-#define PIN_POT_0     28
-#define PIN_POT_1     29
 ```
 
 ## Compiling the firmware 
