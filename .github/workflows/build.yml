@@ -232,7 +232,10 @@ jobs:
       run: cmake --install build --prefix instdir --strip
 
     - name: Copy UF2 File 
-      run: cp build/main.uf2 ./${{ matrix.config.artifact }}
+      run: |
+           cp build/main.uf2 ./${{ matrix.config.artifact }}
+           zip -r ./PicoEPiano_$GITHUB_RUN_NUMBER_$(date +%Y-%m-%d)-$(git rev-parse --short HEAD).zip ./${{ matrix.config.artifact }}
+           echo "artifactName=PicoEPiano_$GITHUB_RUN_NUMBER_$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
     - name: Upload
       uses: actions/upload-artifact@v3
@@ -250,4 +253,4 @@ jobs:
       run: |
            set -ex
            wget -c https://github.com/Michi71/uploadtool/raw/master/upload.sh
-           bash ./upload.sh ./${{ matrix.config.artifact }}
+           bash ./upload.sh ./PicoEPiano*.zip
