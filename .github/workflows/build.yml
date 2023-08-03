@@ -237,11 +237,11 @@ jobs:
            zip -r ../PicoEPiano_$GITHUB_RUN_NUMBER_$(date +%Y-%m-%d)-$(git rev-parse --short HEAD).zip ./${{ matrix.config.artifact }}
            echo "artifactName=PicoEPiano_$GITHUB_RUN_NUMBER_$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
-    - name: Upload
-      uses: actions/upload-artifact@v3
-      with:
-        path: ./${{ matrix.config.artifact }}
-        name: ${{ matrix.config.artifact }}
+#    - name: Upload
+#      uses: actions/upload-artifact@v3
+#      with:
+#        path: ./${{ matrix.config.artifact }}
+#        name: ${{ matrix.config.artifact }}
 
   release:
     if: ${{ github.ref == 'refs/heads/main' }}
@@ -253,4 +253,4 @@ jobs:
       run: |
            set -ex
            wget -c https://github.com/Michi71/uploadtool/raw/master/upload.sh
-           bash ./upload.sh ./PicoEPiano*.zip
+           bash ./upload.sh ../PicoEPiano*.zip
