@@ -68,7 +68,7 @@ void pico_init()
 	
         // LED on GPIO25
         gpio_init(PIN_LED);
-        gpio_set_dir(25, PIN_LED);
+        gpio_set_dir(PIN_LED, GPIO_IN);
 
         uint32_t rand_seed;
         for (int i = 0; i < 32; i++)
