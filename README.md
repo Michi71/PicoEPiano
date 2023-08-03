@@ -2,6 +2,7 @@
 
 This Repository is a work in progress and may not build or compile. It does not yet contain key information such as schematic diagrams or hardware information and makes no garantees about the fitness or quality of the code.
 
+
 # PicoEPiano - A Raspberry Pi Pico RP2040 Electric Piano Synthesizer
 
 The firmware is build around the famous software sampler VST MDA ePiano. At the moment the max. polyphony is set to 96 instead of 8 in the original software.
@@ -14,6 +15,7 @@ The firmware is build around the famous software sampler VST MDA ePiano. At the 
 - 128x64 OLED screen (SH1106)
 - 1 rotary encoder (KY-040)
 - MIDI In via USB or Serial
+
 
 ## Software Components
 
@@ -45,13 +47,15 @@ mkdir build && cd build
 cmake .. (optionally add -GNinja)
 make (or ninja when you have used -GNinja)
 ```
-Now you can find a main.uf2 in the build folder, which is your firmware.
+Now you can find a **main.uf2** in the build folder, which is your firmware.
+
 
 ## Copying the Firmware to the Raspberry Pi Pico
 
 Plug in the USB cable while holding the **BOOT** button.
 After that, a **RPI-RP2** disk volume will appear. Simply drag and drop the UF2 file to this drive and the Pico will
 reboot after a moment, the drive will disappear and your firmware will be running.
+
 
 ## More information
 
