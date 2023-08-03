@@ -7,7 +7,8 @@ This Repository is a work in progress and may not build or compile. It does not 
 
 The firmware is build around the famous software sampler VST MDA ePiano. At the moment the max. polyphony is set to 96 instead of 8 in the original software.
 
-![IMG_1435](https://github.com/Michi71/PicoEPiano/assets/47889385/4f4629db-4f08-4c81-b109-95b2a9d728fb)
+
+![IMG_1435](https://github.com/Michi71/PicoEPiano/assets/47889385/eecfe3be-84ed-44cc-9c36-84aafe3ea1e0)
 
 
 
