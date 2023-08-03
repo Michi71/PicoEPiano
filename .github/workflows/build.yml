@@ -237,6 +237,7 @@ jobs:
            cp build/main.uf2 ~/${{ matrix.config.artifact }}
            zip -r ~/PicoEPiano_$GITHUB_RUN_NUMBER_$(date +%Y-%m-%d)-$(git rev-parse --short HEAD).zip ~/${{ matrix.config.artifact }}
            echo "artifactName=PicoEPiano_$GITHUB_RUN_NUMBER_$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+           ls ~ -l
 
 #    - name: Upload
 #      uses: actions/upload-artifact@v3
