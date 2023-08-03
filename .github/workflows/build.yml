@@ -237,22 +237,6 @@ jobs:
            cp build/main.uf2 ~/${{ matrix.config.artifact }}
            zip -r ~/PicoEPiano_$GITHUB_RUN_NUMBER_$(date +%Y-%m-%d)-$(git rev-parse --short HEAD).zip ~/${{ matrix.config.artifact }}
            echo "artifactName=PicoEPiano_$GITHUB_RUN_NUMBER_$(date +%Y-%m-%d)-$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-           ls ~ -l
-
-#    - name: Upload
-#      uses: actions/upload-artifact@v3
-#      with:
-#        path: ./${{ matrix.config.artifact }}
-#        name: ${{ matrix.config.artifact }}
-
-  release:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    runs-on: ubuntu-latest
-    needs: build
-    
-    steps:
-    - name: Upload to GitHub Releases (only when building from main branch)
-      run: |
-           set -ex
            wget -c https://github.com/Michi71/uploadtool/raw/master/upload.sh
            bash ./upload.sh ~/PicoEPiano*.zip
+           ls ~ -l
