@@ -18,6 +18,27 @@ The firmware is build around the famous software sampler VST MDA ePiano. At the 
 ## Software Components
 
 The basic sceleton for the i2s sound output, freeRTOS tasks and USB midi input are taken from the PicoADK project (https://github.com/DatanoiseTV/PicoADK-Firmware-Template.git). The RP2040 is overclocked to 402MHz. 
+The pins for connecting the hardware to the pico are defined in the /includes/project_config.h file
+```bash
+#define PIN_MIDI_RX 5
+
+#define PIN_I2S_DOUT  9
+#define PIN_I2S_BCK   10
+#define PIN_I2S_WS    11
+
+#define  PIN_ENC_BTN  13
+#define  PIN_ENC_A    20
+#define  PIN_ENC_B    21
+
+#define  PIN_LED	  25
+
+#define PIN_OLED_SDA  2
+#define PIN_OLED_SCL  3
+
+#define PIN_POT_0     28
+#define PIN_POT_1     29
+```
+
 ## Compiling the firmware 
 ```bash
 git clone --recursive https://github.com/Michi71/PicoEPiano.git picoepiano
