@@ -11,7 +11,7 @@ target_include_directories(u8g2 PUBLIC
 	${CMAKE_CURRENT_LIST_DIR}/csrc
 )
 
-target_link_libraries(u8g2 pico_stdlib)
+target_link_libraries(u8g2)
 
 target_compile_options(u8g2 PUBLIC
 	-Wno-deprecated-declarations
