@@ -1,0 +1,22 @@
+name: 'Submodules Add'
+
+
+on:
+  # Allows you to run this workflow manually from the Actions tab or through HTTP API
+  workflow_dispatch:
+        
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Recursively add git submodules
+      run: |   
+           git config --global user.email "m.geerken@address-solutions.de"
+           git config --global user.name "Michi71"
+           git submodule add https://github.com/olikraus/u8g2.git lib/u8g2
+           git submodule init
+           git submodule update
+           git add .gitmodules lib/u8g2
+           git commit -am 'Added <repository> as a submodule'
+           git push
