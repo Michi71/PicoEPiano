@@ -14,9 +14,9 @@ jobs:
       run: |   
            git config --global user.email "m.geerken@address-solutions.de"
            git config --global user.name "Michi71"
-           git submodule add https://github.com/olikraus/u8g2.git lib/u8g2
+           git submodule add https://github.com/olikraus/u8g2.git lib/u8g2/u8g2
            git submodule init
            git submodule update
-           git add .gitmodules lib/u8g2
+           git add .gitmodules lib/u8g2/u8g2
            git commit -am 'Added <repository> as a submodule'
            git push
