@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include "pico/binary_info.h"
 #include "project_config.h"
-#include "bsp/board.h"
 #include "midi_input_usb.h"
 #include "audio_subsystem.h"
 #include "pico_hw.h"
+
+#if __has_include("bsp/board_api.h")
+#include "bsp/board_api.h"
+#else
+#include "bsp/board.h"
+#endif
 
 #include "u8g2.h"
 
