@@ -73,19 +73,19 @@ MIDIInputUSB usbmidi;
         if (level > 0)
         {
             ep.noteOn(note, level);
-			gpio_put(25, 1);
+			gpio_put(PIN_LED, 1);
         }
         else
         {
             ep.noteOff(note);
-			gpio_put(25, 0);
+			gpio_put(PIN_LED, 0);
         }
     }
 
     void note_off_callback(uint8_t note, uint8_t level, uint8_t channel)
     {
         ep.noteOff(note);
-		gpio_put(25, 0);
+		gpio_put(PIN_LED, 0);
     }
 
     void cc_callback(uint8_t cc, uint8_t value, uint8_t channel)
