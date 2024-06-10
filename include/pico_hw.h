@@ -15,7 +15,12 @@
 #include "hardware/clocks.h"
 #include "hardware/vreg.h"
 #include "hardware/structs/rosc.h"
+
+#if __has_include("bsp/board_api.h")
+#include "bsp/board_api.h"
+#else
 #include "bsp/board.h"
+#endif
 
 #include "u8g2.h"
 
