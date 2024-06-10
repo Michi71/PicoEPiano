@@ -104,13 +104,13 @@ extern "C" {
 #ifndef PICO_AUDIO_I2S_DATA_PIN
 //#warning PICO_AUDIO_I2S_DATA_PIN should be defined when using AUDIO_I2S
 //#define PICO_AUDIO_I2S_DATA_PIN 18
-#define PICO_AUDIO_I2S_DATA_PIN 9
+#define PICO_AUDIO_I2S_DATA_PIN 26
 #endif
 
 #ifndef PICO_AUDIO_I2S_CLOCK_PIN_BASE
 //#warning PICO_AUDIO_I2S_CLOCK_PIN_BASE should be defined when using AUDIO_I2S
 //#define PICO_AUDIO_I2S_CLOCK_PIN_BASE 16
-#define PICO_AUDIO_I2S_CLOCK_PIN_BASE 10
+#define PICO_AUDIO_I2S_CLOCK_PIN_BASE 27
 #endif
 
 // todo this needs to come from a build config
