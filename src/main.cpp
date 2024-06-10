@@ -24,7 +24,7 @@
 #define DEBUG_MIDI 0
 
 // Set to 0 if you want to play notes via USB MIDI
-#define PLAY_RANDOM_NOTES 0
+#define PLAY_RANDOM_NOTES 1
 
 #ifdef __cplusplus
 extern "C"
