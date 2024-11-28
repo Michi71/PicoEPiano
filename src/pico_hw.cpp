@@ -50,9 +50,9 @@ uint8_t u8x8_gpio_and_delay_pico(u8x8_t *u8x8, uint8_t msg,uint8_t arg_int, void
 void pico_init()
 {
         // Overclock the CPU to 402 MHz.
-        vreg_set_voltage(VREG_VOLTAGE_1_30);
+        /*vreg_set_voltage(VREG_VOLTAGE_1_30);
         sleep_ms(1);
-        set_sys_clock_khz(402000, true);
+        set_sys_clock_khz(402000, true);*/
 
         // Initialize TinyUSB
         board_init();
