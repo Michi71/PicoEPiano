@@ -61,7 +61,7 @@ void pico_init()
 
 	vreg_set_voltage(VREG_VOLTAGE_1_30);
 	sleep_ms(10);
-	set_sys_clock_khz(366000, true);
+	set_sys_clock_khz(402000, true);
 
 	// A0 SDK won't pick up on the PICO_EMBED_XIP_SETUP flag, so just to make sure:
 	/*hw_write_masked(
