@@ -72,7 +72,7 @@ void pico_init()
 		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
 	);*/
 
-        vreg_set_voltage(VREG_VOLTAGE_1_30); 
+        vreg_set_voltage(VREG_VOLTAGE_1_50); 
         sleep_ms(10);
         set_sys_clock_khz(clockspeed, false);
         clock_configure(
