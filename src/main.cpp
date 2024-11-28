@@ -107,6 +107,18 @@ MIDIInputUSB usbmidi;
         }
     }
 
+    // This task blinks the LEDs on GPIO 2-5
+    void blinker_task(void *pvParameters)
+    {
+        while (1)
+        {
+            gpio_put(PIN_LED, 1);
+            vTaskDelay(pdMS_TO_TICKS(500));
+            gpio_put(PIN_LED, 0);
+            vTaskDelay(pdMS_TO_TICKS(500));
+        }
+    }
+
     // This tasks generates random notes and plays them.
     // It is only used if PLAY_RANDOM_NOTES is set to 1.
     void play_task(void *pvParameters)
@@ -163,52 +175,63 @@ MIDIInputUSB usbmidi;
 
     int main(void)
     {
-	
+    
         // initialize the hardware
-        pico_init();	// Board	
-		bt.Init();		// Button
-		enc.init();		// Encoder
-		
-		// Initialize the audio subsystem
+        pico_init();    // Board    
+        bt.Init();      // Button
+        enc.init();     // Encoder
+        
+        // Initialize the audio subsystem
         ap = init_audio();
-		ep.setVolume(64); 
+        ep.setVolume(64); 
 
-		// Initialize the OLED screen (SH1106)
-		u8g2_Setup_sh1106_i2c_128x64_noname_f(&u8g2, 
-										  U8G2_R0, 
-										  u8x8_byte_pico_hw_i2c, 
-										  u8x8_gpio_and_delay_pico);	 
-		u8g2_InitDisplay(&u8g2);
-		u8g2_SetPowerSave(&u8g2, 0); 	
+        // Initialize the OLED screen (SH1106)
+        u8g2_Setup_sh1106_i2c_128x64_noname_f(&u8g2, 
+                                              U8G2_R0, 
+                                              u8x8_byte_pico_hw_i2c, 
+                                              u8x8_gpio_and_delay_pico);     
+        u8g2_InitDisplay(&u8g2);
+        u8g2_SetPowerSave(&u8g2, 0);    
         u8g2_ClearBuffer(&u8g2);
-		
-		// Show Splash Screen
-		u8g2_SetFont(&u8g2, u8g2_font_8x13B_tf);
-		u8g2_SetBitmapMode(&u8g2, false);		
-		u8g2_FirstPage(&u8g2);
-		do 
-		{
-			u8g2_DrawXBMP(&u8g2, 2, 15, logoWidth, logoHeight, logo);
-			u8g2_DrawUTF8(&u8g2, 40, 25, PICO_PROGRAM_NAME);			
-			u8g2_DrawUTF8(&u8g2, 40, 40, PICO_PROGRAM_VERSION_STRING);
-		} while (u8g2_NextPage(&u8g2));
-		
-		sleep_ms(2000);
-										  
-		/*while (1) {		
-			gpio_put(25, 1);
-			sleep_ms(500);
-			gpio_put(25, 0);
-			sleep_ms(500);
-		}*/
+        
+        // Show Splash Screen
+        u8g2_SetFont(&u8g2, u8g2_font_8x13B_tf);
+        u8g2_SetBitmapMode(&u8g2, false);       
+        u8g2_FirstPage(&u8g2);
+        do 
+        {
+            u8g2_DrawXBMP(&u8g2, 2, 15, logoWidth, logoHeight, logo);
+            u8g2_DrawUTF8(&u8g2, 40, 25, PICO_PROGRAM_NAME);            
+            u8g2_DrawUTF8(&u8g2, 40, 40, PICO_PROGRAM_VERSION_STRING);
+        } while (u8g2_NextPage(&u8g2));
+        
+        sleep_ms(2000);
+                                          
+        /*while (1) {       
+            gpio_put(25, 1);
+            sleep_ms(500);
+            gpio_put(25, 0);
+            sleep_ms(500);
+        }*/
 
-		// Create FreeRTOS Tasks for USB MIDI and printing statistics
+        // Create FreeRTOS Tasks for USB MIDI and printing statistics
         xTaskCreate(usb_midi_task, "USBMIDI", 4096, NULL, configMAX_PRIORITIES, NULL);
-		xTaskCreate(gui_task, "GUI", 4096, NULL, configMAX_PRIORITIES - 1, NULL);
+        xTaskCreate(gui_task, "GUI", 4096, NULL, configMAX_PRIORITIES - 1, NULL);
+        xTaskCreate(blinker_task, "BLINKER", 128, NULL, configMAX_PRIORITIES - 1, NULL);
 #if PLAY_RANDOM_NOTES
         xTaskCreate(play_task, "PLAY", 1024, NULL, configMAX_PRIORITIES - 1, NULL);
 #endif
 
+        // Start the scheduler.
+        vTaskStartScheduler();
+
+        // Idle loop.
+        while (1)
+        {
+            ;
+            ;
+        } 
+    }
         // Start the scheduler.
         vTaskStartScheduler();
 
