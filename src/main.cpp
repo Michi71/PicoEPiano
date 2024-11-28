@@ -238,26 +238,26 @@ MIDIInputUSB usbmidi;
     // The audio data is stored in the audio_buffer_t struct.
     void __not_in_flash_func(i2s_callback_func())
     {
-		if (ParamChange != 0) return;
-		
+        if (ParamChange != 0) return;
+        
         audio_buffer_t *buffer = take_audio_buffer(ap, false);
         if (buffer == NULL)
         {
             return;
         }
-		int16_t l[buffer->max_sample_count];
-		int16_t r[buffer->max_sample_count];
-		
+        int16_t l[buffer->max_sample_count];
+        int16_t r[buffer->max_sample_count];
+        
         int32_t *samples = (int32_t *)buffer->buffer->bytes;
 
-		// Process the synth
-		ep.process(&l[0], &r[0]);
+        // Process the synth
+        ep.process(&l[0], &r[0]);
 
         // We are filling the buffer with 32-bit samples (2 channels)
         for (uint i = 0; i < buffer->max_sample_count; i++)
         {
-			samples[i * 2 + 0] = l[i] << 16;  	// LEFT
-            samples[i * 2 + 1] = r[i] << 16; 	// RIGHT
+            samples[i * 2 + 0] = l[i] << 16;    // LEFT
+            samples[i * 2 + 1] = r[i] << 16;    // RIGHT
         }
 
         buffer->sample_count = buffer->max_sample_count;
