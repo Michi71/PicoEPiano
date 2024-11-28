@@ -64,11 +64,11 @@ void pico_init()
 	set_sys_clock_khz(366000, true);
 
 	// A0 SDK won't pick up on the PICO_EMBED_XIP_SETUP flag, so just to make sure:
-	hw_write_masked(
+	/*hw_write_masked(
 		&qmi_hw->m[0].timing,
 		3 << QMI_M0_TIMING_RXDELAY_LSB | 2 << QMI_M0_TIMING_CLKDIV_LSB,
 		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
-	);
+	);*/
 
         // Initialize TinyUSB
         board_init();
