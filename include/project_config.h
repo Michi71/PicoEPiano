@@ -19,8 +19,8 @@
 
 #define  PIN_LED	  25
 
-#define PIN_OLED_SDA  1
-#define PIN_OLED_SCL  2
+#define PIN_OLED_SDA  2
+#define PIN_OLED_SCL  3
 
 //#define PIN_POT_0     28
 #define PIN_POT_1     29
