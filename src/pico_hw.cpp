@@ -72,7 +72,7 @@ void pico_init()
 		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
 	);*/
 
-        vreg_set_voltage(VREG_VOLTAGE_1_50); 
+        vreg_set_voltage(VREG_VOLTAGE_MAX); 
         sleep_ms(10);
         set_sys_clock_khz(clockspeed, false);
         clock_configure(
@@ -92,6 +92,9 @@ void pico_init()
         gpio_init(PIN_LED);
         gpio_set_dir(PIN_LED, GPIO_OUT);
 
+	gpio_set_function(47, GPIO_FUNC_XIP_CS1); // CS for PSRAM
+	xip_ctrl_hw->ctrl|=XIP_CTRL_WRITABLE_M1_BITS;
+	
         uint32_t rand_seed;
         for (int i = 0; i < 32; i++)
         {
