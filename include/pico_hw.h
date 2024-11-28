@@ -13,7 +13,10 @@
 #include "hardware/timer.h"
 #include "hardware/watchdog.h"
 #include "hardware/clocks.h"
+#include "hardware/pll.h"
 #include "hardware/vreg.h"
+#include "hardware/clocks.h"
+#include "hardware/timer.h"
 #include "hardware/structs/rosc.h"
 
 #if __has_include("bsp/board_api.h")
