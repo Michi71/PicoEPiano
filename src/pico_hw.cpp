@@ -59,6 +59,15 @@ void pico_init()
                     366000,
                     366000);
 
+	// A0 SDK won't pick up on the PICO_EMBED_XIP_SETUP flag, so just to make sure:
+#if PICO_RP2350
+	hw_write_masked(
+		&qmi_hw->m[0].timing,
+		3 << QMI_M0_TIMING_RXDELAY_LSB | 2 << QMI_M0_TIMING_CLKDIV_LSB,
+		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
+	);
+#endif
+
         // Initialize TinyUSB
         board_init();
         tusb_init();
