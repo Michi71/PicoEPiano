@@ -232,16 +232,6 @@ MIDIInputUSB usbmidi;
             ;
         } 
     }
-        // Start the scheduler.
-        vTaskStartScheduler();
-
-        // Idle loop.
-        while (1)
-        {
-            ;
-            ;
-        } 
-    }
 
     // This fis the I2S callback function. It is called when the I2S subsystem
     // needs more audio data. It is called at a fixed rate of 48kHz.
