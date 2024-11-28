@@ -133,7 +133,7 @@ pico_set_printf_implementation(main compiler)
 target_compile_options(main PRIVATE -DPICOMITE 
                                     -DNDEBUG 
                                     -Drp2350
-	                            -DPICO_XOSC_STARTUP_DELAY_MULTIPLIER=64 
+                                    -DPICO_XOSC_STARTUP_DELAY_MULTIPLIER=64 
                                     -O3
                                     -Wall
 )
