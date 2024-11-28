@@ -13,7 +13,7 @@ jobs:
       
     - name: Del Submodule
       run: |
-        git rm --cached lib/pico-extrase
+        git rm --cached lib/pico-extras
       
     - name: Commit changes
       run: |
