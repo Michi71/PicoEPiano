@@ -99,12 +99,14 @@ if (DEFINED PICO_PLATFORM AND PICO_PLATFORM STREQUAL "rp2350-arm-s")
 	target_compile_definitions(main PRIVATE
 	        USE_AUDIO_I2S=1
 	        PICO_USE_SW_SPIN_LOCKS=1
+                PICO_AUDIO_I2S_DATA_PIN=26
+                PICO_AUDIO_I2S_CLOCK_PIN_BASE=27	 
 		)
 else()
 	target_compile_definitions(main PRIVATE
 	        USE_AUDIO_I2S=1
-	 	PICO_AUDIO_I2S_DATA_PIN=26
-   		PICO_AUDIO_I2S_CLOCK_PIN_BASE=27
+                PICO_AUDIO_I2S_DATA_PIN=26
+                PICO_AUDIO_I2S_CLOCK_PIN_BASE=27
 		)
 endif()
 
