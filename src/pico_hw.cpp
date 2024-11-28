@@ -1,6 +1,8 @@
 #include "pico_hw.h"
 #include "project_config.h"
 
+#define clockspeed 315000
+
 uint8_t u8x8_byte_pico_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
 {
     static uint8_t buffer[32]; /* u8g2/u8x8 will never send more than 32 bytes between START_TRANSFER and END_TRANSFER */
@@ -59,9 +61,9 @@ void pico_init()
                     366000,
                     366000);*/
 
-	vreg_set_voltage(VREG_VOLTAGE_1_30);
+	/*vreg_set_voltage(VREG_VOLTAGE_1_30);
 	sleep_ms(10);
-	set_sys_clock_khz(402000, true);
+	set_sys_clock_khz(402000, true);*/
 
 	// A0 SDK won't pick up on the PICO_EMBED_XIP_SETUP flag, so just to make sure:
 	/*hw_write_masked(
@@ -69,6 +71,16 @@ void pico_init()
 		3 << QMI_M0_TIMING_RXDELAY_LSB | 2 << QMI_M0_TIMING_CLKDIV_LSB,
 		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
 	);*/
+
+	vreg_set_voltage(VREG_VOLTAGE_1_30); 
+        set_sys_clock_khz(clockspeed, false);
+        clock_configure(
+                clk_peri,
+                0,                                                // No glitchless mux
+                CLOCKS_CLK_PERI_CTRL_AUXSRC_VALUE_CLKSRC_PLL_SYS, // System PLL on AUX mux
+                clockspeed * 1000,                               // Input frequency
+                clockspeed * 1000                                // Output (must be same as no divider)
+         );
 
         // Initialize TinyUSB
         board_init();
