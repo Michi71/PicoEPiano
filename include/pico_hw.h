@@ -16,6 +16,9 @@
 #include "hardware/pll.h"
 #include "hardware/vreg.h"
 #include "hardware/clocks.h"
+#include "hardware/structs/xip_ctrl.h"
+#include "hardware/structs/xip_aux.h"
+#include "hardware/structs/qmi.h"
 #include "hardware/timer.h"
 #include "hardware/structs/rosc.h"
 
