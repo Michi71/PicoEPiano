@@ -145,33 +145,33 @@ MIDIInputUSB usbmidi;
 		}
     }
 		
-	// GUI
+    // GUI
     void gui_task(void *p)
-    {	
-		int8_t res;
-				
+    {   
+        int8_t res;
+                
         u8g2_ClearDisplay(&u8g2);
-		u8g2_SetDrawColor(&u8g2, 1);		
-		
-		while (1)
-		{
-			// Select Program
-			res = pico_UserInterfaceProgramSelect(&u8g2, &enc, &bt, &ep);
-			
-			while (res > -1) {
-				vTaskDelay(pdMS_TO_TICKS(500));
-				res = pico_UserInterfaceParamSelect(&u8g2, &enc, &bt, &ep);
-				if (res > -1)
-				{
-					vTaskDelay(pdMS_TO_TICKS(500));
-					pico_UserInterfaceParamInput(&u8g2, &enc, &bt, &ep, res-1);
-				//	ep.flashWriteProgram();
-				}
-			}
-			
-			vTaskDelay(pdMS_TO_TICKS(500));
-		}
-	}
+        u8g2_SetDrawColor(&u8g2, 1);        
+        
+        while (1)
+        {
+            // Select Program
+            res = pico_UserInterfaceProgramSelect(&u8g2, &enc, &bt, &ep);
+            
+            while (res > -1) {
+                vTaskDelay(pdMS_TO_TICKS(500));
+                res = pico_UserInterfaceParamSelect(&u8g2, &enc, &bt, &ep);
+                if (res > -1)
+                {
+                    vTaskDelay(pdMS_TO_TICKS(500));
+                    pico_UserInterfaceParamInput(&u8g2, &enc, &bt, &ep, res-1);
+                }
+            }
+            
+            vTaskDelay(pdMS_TO_TICKS(500));
+        }
+    }
+
 
     int main(void)
     {
