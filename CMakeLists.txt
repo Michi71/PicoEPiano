@@ -28,9 +28,12 @@ pico_sdk_init()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR} ".")
 
+
+# add_subdirectory(lib/flash)
 add_subdirectory(lib/audio)
-add_subdirectory(lib/oled)
-add_subdirectory(lib/BeatrixCPP)
+# add_subdirectory(lib/eeprom)
+add_subdirectory(lib/encoder)
+add_subdirectory(lib/u8g2)
 
 # Set the real flag based on the PICO_PLATFORM variable
 if (DEFINED PICO_PLATFORM AND PICO_PLATFORM STREQUAL "rp2350-arm-s")
@@ -48,11 +51,15 @@ endif()
 
 add_executable(main
     src/usb_descriptors.c
+    src/mdaEPiano.cpp
     src/main.cpp 
     src/pico_hw.cpp
-    src/vultin.cpp
     src/midi_input_usb.cpp
     src/get_serial.c
+    src/pico_selection_list.cpp
+    src/pico_input_value.cpp
+    src/pico_program_select.cpp
+    src/pico_param_select.cpp
     lib/FreeRTOS-Kernel/portable/MemMang/heap_3.c)
 
 pico_set_program_name(main "main")
@@ -85,8 +92,8 @@ target_link_libraries(main
         tinyusb_device
         tinyusb_board
         Audio
-        Oled
-	BeatrixCPP
+        RotaryEncoder
+        u8g2
         FreeRTOS-Kernel
         )
 
