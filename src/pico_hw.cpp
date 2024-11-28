@@ -53,6 +53,11 @@ void pico_init()
         vreg_set_voltage(VREG_VOLTAGE_1_30);
         sleep_ms(100);
         set_sys_clock_khz(402000, true);
+	clock_configure(clk_peri,
+                    0,
+                    CLOCKS_CLK_PERI_CTRL_AUXSRC_VALUE_CLK_SYS,
+                    402000,
+                    402000);
 
         // Initialize TinyUSB
         board_init();
