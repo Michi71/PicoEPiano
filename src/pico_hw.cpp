@@ -50,23 +50,25 @@ uint8_t u8x8_gpio_and_delay_pico(u8x8_t *u8x8, uint8_t msg,uint8_t arg_int, void
 void pico_init()
 {
         // Overclock the CPU to 402 MHz.
-        vreg_set_voltage(VREG_VOLTAGE_1_30);
+        /*vreg_set_voltage(VREG_VOLTAGE_1_30);
         sleep_ms(100);
         set_sys_clock_khz(366000, true);
 	clock_configure(clk_peri,
                     0,
                     CLOCKS_CLK_PERI_CTRL_AUXSRC_VALUE_CLK_SYS,
                     366000,
-                    366000);
+                    366000);*/
+
+	vreg_set_voltage(VREG_VOLTAGE_1_30);
+	sleep_ms(10);
+	set_sys_clock_khz(366000, true);
 
 	// A0 SDK won't pick up on the PICO_EMBED_XIP_SETUP flag, so just to make sure:
-#if PICO_RP2350
 	hw_write_masked(
 		&qmi_hw->m[0].timing,
 		3 << QMI_M0_TIMING_RXDELAY_LSB | 2 << QMI_M0_TIMING_CLKDIV_LSB,
 		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
 	);
-#endif
 
         // Initialize TinyUSB
         board_init();
