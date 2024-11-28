@@ -1,0 +1,25 @@
+name: Add Submodules
+
+on:
+  # Allows you to run this workflow manually from the Actions tab or through HTTP API
+  workflow_dispatch:
+
+jobs:
+  add_submodule:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Add FreeRTOS Kernel
+      run: |
+        git submodule add https://github.com/raspberrypi/FreeRTOS-Kernel.git lib/FreeRTOS-Kernel
+      
+    - name: Commit changes
+      run: |
+        git config --global user.email "m.geerken@address-solutions.de"
+        git config --global user.name "Michi71"
+        git add .gitmodules lib/FreeRTOS-Kernel
+        git commit -m 'Added <repository> as a submodule'
+        git push
