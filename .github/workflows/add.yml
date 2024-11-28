@@ -14,12 +14,12 @@ jobs:
       
     - name: Add FreeRTOS Kernel
       run: |
-        git submodule add https://github.com/raspberrypi/FreeRTOS-Kernel.git lib/FreeRTOS-Kernel
+        git submodule add https://github.com/raspberrypi/pico-sdk.git lib/pico-sdk
       
     - name: Commit changes
       run: |
         git config --global user.email "m.geerken@address-solutions.de"
         git config --global user.name "Michi71"
-        git add .gitmodules lib/FreeRTOS-Kernel
+        git add .gitmodules lib/pico-sdk
         git commit -m 'Added <repository> as a submodule'
         git push
