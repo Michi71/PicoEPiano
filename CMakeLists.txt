@@ -8,8 +8,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(PICO_EXTRAS_PATH "../lib/pico-extras")
 
 set(PICO_PLATFORM "rp2040")
-# set(PICO_BOARD "pico")
-set(PICO_BOARD waveshare_rp2040_plus_16mb)
+set(PICO_BOARD "pico")
+# set(PICO_BOARD waveshare_rp2040_plus_16mb)
 # set(PICO_PLATFORM "rp2350-arm-s") 
 # set(PICO_BOARD "sparkfun_promicro_rp2350")
 # set(PICO_BOARD "pico2")
@@ -28,10 +28,7 @@ pico_sdk_init()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR} ".")
 
-
-# add_subdirectory(lib/flash)
 add_subdirectory(lib/audio)
-# add_subdirectory(lib/eeprom)
 add_subdirectory(lib/encoder)
 add_subdirectory(lib/u8g2)
 
@@ -124,12 +121,11 @@ add_compile_options("-Wall" "-Wredundant-decls")
 
 # compile the following thins only if rp2040 is used
 if (PICO_PLATFORM STREQUAL "rp2040")
-pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
-target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
-
-pico_set_boot_stage2(main slower_boot2)
+    pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
+    target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
+    pico_set_boot_stage2(main slower_boot2)
 else()
-message("Skipping slower_boot2 as PICO_PLATFORM is not rp2040")
+    message("Skipping slower_boot2 as PICO_PLATFORM is not rp2040")
 endif()
 
 pico_add_extra_outputs(main)
