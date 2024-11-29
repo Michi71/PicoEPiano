@@ -1,7 +1,7 @@
 #include "pico_hw.h"
 #include "project_config.h"
 
-#define clockspeed 402000
+#define clockspeed 400000
 
 uint8_t u8x8_byte_pico_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
 {
@@ -75,13 +75,13 @@ void pico_init()
         vreg_set_voltage(VREG_VOLTAGE_1_40);
         sleep_ms(10);
         set_sys_clock_khz(clockspeed, false);
-      /*  clock_configure(
+        clock_configure(
                 clk_peri,
                 0,                                                // No glitchless mux
                 CLOCKS_CLK_PERI_CTRL_AUXSRC_VALUE_CLKSRC_PLL_SYS, // System PLL on AUX mux
                 clockspeed * 1000,                                // Input frequency
                 clockspeed * 1000                                 // Output (must be same as no divider)
-        ); */
+        ); 
 
         // Initialize TinyUSB
         board_init();
