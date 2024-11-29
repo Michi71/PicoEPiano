@@ -137,26 +137,14 @@ if (PICO_PLATFORM STREQUAL "rp2040")
 	target_compile_definitions(main_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
 else ()
 	target_compile_definitions(main PRIVATE
-		PICO_FLASH_SPI_CLKDIV=4
-		PICO_FLASH_SPI_RXDELAY=3
+                PICO_EMBED_XIP_SETUP=1
+                PICO_FLASH_SPI_RXDELAY=3
+                PICO_FLASH_SPI_CLKDIV=4
+                PICO_CLOCK_AJDUST_PERI_CLOCK_WITH_SYS_CLOCK=1
 		)
 endif()
 
 target_compile_definitions(main PRIVATE	PICO_FLASH_SPI_CLKDIV=4)
 target_compile_definitions(main PRIVATE PICO_STACK_SIZE=0x200)
-
-#if (PICO_PLATFORM STREQUAL "rp2040")
-#    pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
-#    target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
-#    pico_set_boot_stage2(main slower_boot2)
-#else()
-#    target_compile_definitions(main PRIVATE
-#		PICO_EMBED_XIP_SETUP=1
-#		PICO_BOOT_STAGE2_CHOOSE_W25Q080=1
-#		PICO_FLASH_SPI_CLKDIV=4
-#		PICO_FLASH_SPI_RXDELAY=4
-#                PICO_CLOCK_AJDUST_PERI_CLOCK_WITH_SYS_CLOCK=1
-#		)
-# endif()
 
 pico_add_extra_outputs(main)
