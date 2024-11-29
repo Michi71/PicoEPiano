@@ -129,6 +129,7 @@ add_compile_options("-Wall" "-Wredundant-decls")
 # All code and data must be RAM-resident so we can stream continuously from
 # flash using direct SSI DMA, which would trample on XIP.
 # pico_set_binary_type(main copy_to_ram)
+pico_set_binary_type(main no_flash)
 
 
 if (PICO_PLATFORM STREQUAL "rp2040")
