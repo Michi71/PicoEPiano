@@ -137,7 +137,6 @@ if (PICO_PLATFORM STREQUAL "rp2040")
 	target_compile_definitions(main_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
 else ()
 	target_compile_definitions(main PRIVATE
-                PICO_BOOT_STAGE2_CHOOSE_GENERIC_03H=1
 		PICO_FLASH_SPI_CLKDIV=4
 		PICO_FLASH_SPI_RXDELAY=3
 		)
