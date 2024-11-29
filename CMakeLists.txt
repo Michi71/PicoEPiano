@@ -12,7 +12,7 @@ set(PICO_EXTRAS_PATH "../lib/pico-extras")
 # set(PICO_BOARD waveshare_rp2040_plus_16mb)
 set(PICO_PLATFORM "rp2350-arm-s") 
 # set(PICO_BOARD "sparkfun_promicro_rp2350")
-set(PICO_BOARD "pimoroni_pga2350")
+set(PICO_BOARD "solderparty_rp2350_stamp")
 
 set(PICO_NO_COPRO_DIS 1)
 
