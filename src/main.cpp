@@ -108,7 +108,7 @@ MIDIInputUSB usbmidi;
     }
 
     // This task blinks the LEDs on GPIO 2-5
-    void blinker_task(void *pvParameters)
+    /*void blinker_task(void *pvParameters)
     {
         while (1)
         {
@@ -117,7 +117,7 @@ MIDIInputUSB usbmidi;
             gpio_put(PIN_LED, 0);
             vTaskDelay(pdMS_TO_TICKS(500));
         }
-    }
+    }*/
 
     // This tasks generates random notes and plays them.
     // It is only used if PLAY_RANDOM_NOTES is set to 1.
@@ -217,7 +217,7 @@ MIDIInputUSB usbmidi;
         // Create FreeRTOS Tasks for USB MIDI and printing statistics
         xTaskCreate(usb_midi_task, "USBMIDI", 4096, NULL, configMAX_PRIORITIES, NULL);
         xTaskCreate(gui_task, "GUI", 4096, NULL, configMAX_PRIORITIES - 1, NULL);
-        xTaskCreate(blinker_task, "BLINKER", 128, NULL, configMAX_PRIORITIES - 1, NULL);
+        // xTaskCreate(blinker_task, "BLINKER", 128, NULL, configMAX_PRIORITIES - 1, NULL);
 #if PLAY_RANDOM_NOTES
         xTaskCreate(play_task, "PLAY", 1024, NULL, configMAX_PRIORITIES - 1, NULL);
 #endif
