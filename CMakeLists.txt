@@ -12,7 +12,7 @@ set(PICO_EXTRAS_PATH "../lib/pico-extras")
 # set(PICO_BOARD waveshare_rp2040_plus_16mb)
 set(PICO_PLATFORM "rp2350-arm-s") 
 # set(PICO_BOARD "sparkfun_promicro_rp2350")
-set(PICO_BOARD "pico2")
+set(PICO_BOARD "pimoroni_pga2350")
 
 set(PICO_NO_COPRO_DIS 1)
 
@@ -136,7 +136,10 @@ pico_set_printf_implementation(main compiler)
 target_compile_options(main PRIVATE -DPICOMITE 
                                     -DNDEBUG 
                                     -Drp2350
-                                    -DPICO_XOSC_STARTUP_DELAY_MULTIPLIER=64 
+                                    -DPICO_CLOCK_AJDUST_PERI_CLOCK_WITH_SYS_CLOCK
+                                    -DPICO_XOSC_STARTUP_DELAY_MULTIPLIER=64
+				    -DPICO_HEAP_SIZE=0x2000 
+				    -DPICO_FLASH_SPI_CLKDIV=4
                                     -O3
                                     -Wall
 )
