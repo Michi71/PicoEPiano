@@ -126,14 +126,15 @@ endforeach()
 
 add_compile_options("-Wall" "-Wredundant-decls")
 
-target_compile_definitions(main PRIVATE PICO_EMBED_XIP_SETUP=1)
+#target_compile_definitions(main PRIVATE PICO_EMBED_XIP_SETUP=1)
 
-pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
-target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
-pico_set_boot_stage2(main slower_boot2)
-
-pico_set_printf_implementation(main compiler)
-target_compile_options(main PRIVATE -DPICOMITE 
+if (PICO_PLATFORM STREQUAL "rp2040")
+    pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
+    target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
+    pico_set_boot_stage2(main slower_boot2)
+else()
+    pico_set_printf_implementation(main compiler)
+    target_compile_options(main PRIVATE -DPICOMITE 
                                     -DNDEBUG 
                                     -Drp2350
                                     -DPICO_CLOCK_AJDUST_PERI_CLOCK_WITH_SYS_CLOCK
@@ -143,7 +144,8 @@ target_compile_options(main PRIVATE -DPICOMITE
                                     -DPICO_FLASH_SPI_CLKDIV=4
                                     -O3
                                     -Wall
-)
+    )
+endif()
 
 #if (PICO_PLATFORM STREQUAL "rp2040")
 #    pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
