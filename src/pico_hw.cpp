@@ -1,6 +1,10 @@
 #include "pico_hw.h"
 #include "project_config.h"
 
+#include <hardware/structs/qmi.h>
+#include <hardware/structs/xip.h>
+#include <hardware/sync.h>
+
 #define clockspeed 402000
 
 uint8_t u8x8_byte_pico_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
@@ -48,6 +52,20 @@ uint8_t u8x8_gpio_and_delay_pico(u8x8_t *u8x8, uint8_t msg,uint8_t arg_int, void
 }
 
 
+void __no_inline_not_in_flash_func(init_flash_frequency)() {
+	uint32_t interrupt_state = save_and_disable_interrupts();
+
+	qmi_hw->m[0].timing = 1 << QMI_M0_TIMING_COOLDOWN_LSB |
+	                      2 << QMI_M0_TIMING_RXDELAY_LSB |
+	                      3 << QMI_M0_TIMING_CLKDIV_LSB;   // <----- CLOCK DIVISOR HERE
+	qmi_hw->m[0].rcmd =
+		0xEB << QMI_M0_RCMD_PREFIX_LSB /* | 0xA0 << QMI_M0_RCMD_SUFFIX_LSB*/;
+
+	// dummy read
+	*reinterpret_cast<volatile char *>(XIP_NOCACHE_NOALLOC_BASE);
+
+	restore_interrupts(interrupt_state);
+}
 
 void pico_init()
 {
@@ -71,6 +89,8 @@ void pico_init()
 		3 << QMI_M0_TIMING_RXDELAY_LSB | 2 << QMI_M0_TIMING_CLKDIV_LSB,
 		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
 	);*/
+        init_flash_frequency)();
+	
 	vreg_disable_voltage_limit ();
         vreg_set_voltage(VREG_VOLTAGE_1_40);
         sleep_ms(10);
