@@ -138,8 +138,9 @@ target_compile_options(main PRIVATE -DPICOMITE
                                     -Drp2350
                                     -DPICO_CLOCK_AJDUST_PERI_CLOCK_WITH_SYS_CLOCK
                                     -DPICO_XOSC_STARTUP_DELAY_MULTIPLIER=64
-				    -DPICO_HEAP_SIZE=0x2000 
-				    -DPICO_FLASH_SPI_CLKDIV=4
+                                    -DPICO_CORE1_STACK_SIZE=0x00
+                                    -DPICO_HEAP_SIZE=0x2000 
+                                    -DPICO_FLASH_SPI_CLKDIV=4
                                     -O3
                                     -Wall
 )
