@@ -126,13 +126,13 @@ endforeach()
 
 add_compile_options("-Wall" "-Wredundant-decls")
 
-#target_compile_definitions(main PRIVATE PICO_EMBED_XIP_SETUP=1)
+target_compile_definitions(main PRIVATE PICO_EMBED_XIP_SETUP=1)
 
-if (PICO_PLATFORM STREQUAL "rp2040")
+#if (PICO_PLATFORM STREQUAL "rp2040")
     pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
     target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
     pico_set_boot_stage2(main slower_boot2)
-else()
+#else()
     pico_set_printf_implementation(main compiler)
     target_compile_options(main PRIVATE -DPICOMITE 
                                     -DNDEBUG 
@@ -145,7 +145,7 @@ else()
                                     -O3
                                     -Wall
     )
-endif()
+#endif()
 
 #if (PICO_PLATFORM STREQUAL "rp2040")
 #    pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
