@@ -89,13 +89,13 @@ void pico_init()
 		3 << QMI_M0_TIMING_RXDELAY_LSB | 2 << QMI_M0_TIMING_CLKDIV_LSB,
 		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
 	);*/
-        init_flash_frequency ();
+        //init_flash_frequency ();
         vreg_disable_voltage_limit ();
         vreg_set_voltage(VREG_VOLTAGE_1_40);
         sleep_ms(10);
         set_sys_clock_khz(clockspeed, false);
 
-	qmi_hw->m[0].timing = 0x40000101;
+	qmi_hw->m[0].timing = 0x40000204;
 
         // Initialize TinyUSB
         board_init();
