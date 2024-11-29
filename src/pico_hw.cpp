@@ -1,7 +1,7 @@
 #include "pico_hw.h"
 #include "project_config.h"
 
-#define clockspeed 400000
+#define clockspeed 360000
 
 uint8_t u8x8_byte_pico_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
 {
