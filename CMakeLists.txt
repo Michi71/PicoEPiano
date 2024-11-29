@@ -126,26 +126,26 @@ endforeach()
 
 add_compile_options("-Wall" "-Wredundant-decls")
 
-target_compile_definitions(main PRIVATE PICO_EMBED_XIP_SETUP=1)
+# All code and data must be RAM-resident so we can stream continuously from
+# flash using direct SSI DMA, which would trample on XIP.
+pico_set_binary_type(main copy_to_ram)
 
-#if (PICO_PLATFORM STREQUAL "rp2040")
-    pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
-    target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
-    pico_set_boot_stage2(main slower_boot2)
-#else()
-    pico_set_printf_implementation(main compiler)
-    target_compile_options(main PRIVATE -DPICOMITE 
-                                    -DNDEBUG 
-                                    -Drp2350
-                                    -DPICO_CLOCK_AJDUST_PERI_CLOCK_WITH_SYS_CLOCK
-                                    -DPICO_XOSC_STARTUP_DELAY_MULTIPLIER=64
-                                    -DPICO_CORE1_STACK_SIZE=0x00
-                                    -DPICO_HEAP_SIZE=0x2000 
-                                    -DPICO_FLASH_SPI_CLKDIV=4
-                                    -O3
-                                    -Wall
-    )
-#endif()
+
+if (PICO_PLATFORM STREQUAL "rp2040")
+	pico_define_boot_stage2(main_boot2 ${PICO_SDK_PATH}/src/rp2040/boot_stage2/boot2_w25q080.S)
+	pico_set_boot_stage2(main main_boot2)
+	target_compile_definitions(main_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
+else ()
+	target_compile_definitions(main PRIVATE
+		PICO_EMBED_XIP_SETUP=1
+		PICO_BOOT_STAGE2_CHOOSE_W25Q080=1
+		PICO_FLASH_SPI_CLKDIV=4
+		PICO_FLASH_SPI_RXDELAY=3
+		)
+endif()
+
+target_compile_definitions(main PRIVATE	PICO_FLASH_SPI_CLKDIV=4)
+target_compile_definitions(main PRIVATE PICO_STACK_SIZE=0x200)
 
 #if (PICO_PLATFORM STREQUAL "rp2040")
 #    pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
