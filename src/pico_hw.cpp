@@ -95,6 +95,8 @@ void pico_init()
         sleep_ms(10);
         set_sys_clock_khz(clockspeed, false);
 
+	qmi_hw->m[0].timing = 0x40000101;
+
         // Initialize TinyUSB
         board_init();
         tusb_init();
