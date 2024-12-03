@@ -5,6 +5,8 @@ cmake_minimum_required(VERSION 3.22)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_CXX_STANDARD 17)
 
+set(PICO_EXTRAS_PATH "../lib/pico-extras")
+
 # set(PICO_PLATFORM "rp2040")
 # set(PICO_BOARD "pico")
 # set(PICO_BOARD waveshare_rp2040_plus_16mb)
@@ -12,7 +14,6 @@ set(PICO_PLATFORM "rp2350-arm-s")
 # set(PICO_BOARD "sparkfun_promicro_rp2350")
 set(PICO_BOARD "solderparty_rp2350_stamp_xl")
 
-set(PICO_EXTRAS_PATH "../lib/pico-extras")
 set(FREERTOS_KERNEL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/FreeRTOS-Kernel")
 set(PICO_SDK_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/pico-sdk")
 
@@ -25,21 +26,18 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 SET(CMAKE_EXE_LINKER_FLAGS_DEBUG "${CMAKE_EXE_LINKER_FLAGS_DEBUG} -Wl,--print-memory-usage")
 SET(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -Wl,--print-memory-usage")
 
-if (PICO_SDK_VERSION_STRING VERSION_LESS "2.0.0")
-    message(FATAL_ERROR "Raspberry Pi Pico SDK version 2.0.0 (or later) required. Your version is ${PICO_SDK_VERSION_STRING}")
-endif()
-
-# If you want debug output from USB (pass -DPICO_STDIO_USB=1) this ensures you don't lose any debug output while USB is set up
-if (NOT DEFINED PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS)
-    set(PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS 3000)
-endif()
-
 project(main C CXX ASM)
 enable_language(CXX)
 SET(PROJECT_NAME "main")
 SET(BUILD_NAME "${PROJECT_NAME}")
 
 pico_sdk_init()
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR} ".")
+
+add_subdirectory(lib/audio)
+add_subdirectory(lib/encoder)
+add_subdirectory(lib/u8g2)
 
 add_compile_options(-flto -fwhole-program -ffast-math -ffunction-sections -fdata-sections -fms-extensions -O2)
 
@@ -66,12 +64,6 @@ else()
 endif ()
 
 pico_set_boot_stage2(${PROJECT_NAME} slower_boot2)
-
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR} ".")
-
-add_subdirectory(lib/audio)
-add_subdirectory(lib/encoder)
-add_subdirectory(lib/u8g2)
 
 # Set the real flag based on the PICO_PLATFORM variable
 if (DEFINED PICO_PLATFORM AND PICO_PLATFORM STREQUAL "rp2350-arm-s")
