@@ -55,8 +55,8 @@ pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
 if (PICO_PLATFORM STREQUAL "rp2040")
     SET(BUILD_NAME "${BUILD_NAME}-RP2040")
 
-    add_subdirectory(memops_opt)
-    target_link_libraries(${PROJECT_NAME} PRIVATE memops_opt)
+#    add_subdirectory(memops_opt)
+#    target_link_libraries(${PROJECT_NAME} PRIVATE memops_opt)
 
     target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
 else()
@@ -68,7 +68,6 @@ pico_set_boot_stage2(${PROJECT_NAME} slower_boot2)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR} ".")
 
-add_subdirectory(src)
 add_subdirectory(lib/audio)
 add_subdirectory(lib/encoder)
 add_subdirectory(lib/u8g2)
