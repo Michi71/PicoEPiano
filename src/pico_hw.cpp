@@ -90,13 +90,31 @@ void pico_init()
 		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
 	);*/
         //init_flash_frequency ();
-        vreg_disable_voltage_limit ();
+        /*vreg_disable_voltage_limit ();
         vreg_set_voltage(VREG_VOLTAGE_1_40);
         sleep_ms(10);
         set_sys_clock_khz(clockspeed, false);
 
-	qmi_hw->m[0].timing = 0x40000204;
+	qmi_hw->m[0].timing = 0x40000204;*/
 
+	    /* NOTE: DO NOT MODIFY THIS BLOCK */
+#define CPU_SPEED_MHZ (DEFAULT_SYS_CLK_KHZ / 1000)
+        if(CPU_SPEED_MHZ > 266 && CPU_SPEED_MHZ <= 360)
+            vreg_set_voltage(VREG_VOLTAGE_1_20);
+        else if (CPU_SPEED_MHZ > 360 && CPU_SPEED_MHZ <= 396)
+            vreg_set_voltage(VREG_VOLTAGE_1_25);
+        else if (CPU_SPEED_MHZ > 396)
+            vreg_set_voltage(VREG_VOLTAGE_MAX);
+        else
+            vreg_set_voltage(VREG_VOLTAGE_DEFAULT);
+
+        set_sys_clock_khz(CPU_SPEED_MHZ * 1000, true);
+        clock_configure(clk_peri,
+                        0,
+                        CLOCKS_CLK_PERI_CTRL_AUXSRC_VALUE_CLK_SYS,
+                        CPU_SPEED_MHZ * MHZ,
+                        CPU_SPEED_MHZ * MHZ);
+    
         // Initialize TinyUSB
         board_init();
         tusb_init();
