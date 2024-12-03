@@ -49,21 +49,7 @@ if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
     add_compile_options(-Wno-maybe-uninitialized)
 endif()
 
-pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
-
-if (PICO_PLATFORM STREQUAL "rp2040")
-    SET(BUILD_NAME "${BUILD_NAME}-RP2040")
-
-#    add_subdirectory(memops_opt)
-#    target_link_libraries(${PROJECT_NAME} PRIVATE memops_opt)
-
-    target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
-else()
-    SET(BUILD_NAME "${BUILD_NAME}-RP2350")
-    target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=3)
-endif ()
-
-pico_set_boot_stage2(${PROJECT_NAME} slower_boot2)
+# set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${BUILD_NAME}")
 
 # Set the real flag based on the PICO_PLATFORM variable
 if (DEFINED PICO_PLATFORM AND PICO_PLATFORM STREQUAL "rp2350-arm-s")
@@ -91,6 +77,19 @@ add_executable(${PROJECT_NAME}
     src/pico_program_select.cpp
     src/pico_param_select.cpp
     lib/FreeRTOS-Kernel/portable/MemMang/heap_3.c)
+
+pico_define_boot_stage2(slower_boot2 ${PICO_DEFAULT_BOOT_STAGE2_FILE})
+if (PICO_PLATFORM STREQUAL "rp2040")
+    SET(BUILD_NAME "${BUILD_NAME}-RP2040")
+#    add_subdirectory(memops_opt)
+#    target_link_libraries(${PROJECT_NAME} PRIVATE memops_opt)
+    target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=4)
+else()
+    SET(BUILD_NAME "${BUILD_NAME}-RP2350")
+    target_compile_definitions(slower_boot2 PRIVATE PICO_FLASH_SPI_CLKDIV=3)
+endif ()
+pico_set_boot_stage2(${PROJECT_NAME} slower_boot2)
+    
 
 pico_set_program_name(${PROJECT_NAME} "main")
 pico_set_program_version(${PROJECT_NAME} "0.1")
