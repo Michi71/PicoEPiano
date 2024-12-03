@@ -36,6 +36,7 @@ endif()
 
 project(main C CXX ASM)
 enable_language(CXX)
+SET(PROJECT_NAME "main")
 SET(BUILD_NAME "${PROJECT_NAME}")
 
 pico_sdk_init()
