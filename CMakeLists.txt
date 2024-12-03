@@ -86,7 +86,7 @@ if (NOT FREERTOS_KERNEL_PATH AND NOT DEFINED ENV{FREERTOS_KERNEL_PATH})
     return()
 endif()
 
-add_executable(main
+add_executable(${PROJECT_NAME}
     src/usb_descriptors.c
     src/mdaEPiano.cpp
     src/main.cpp 
@@ -99,17 +99,17 @@ add_executable(main
     src/pico_param_select.cpp
     lib/FreeRTOS-Kernel/portable/MemMang/heap_3.c)
 
-pico_set_program_name(main "main")
-pico_set_program_version(main "0.1")
+pico_set_program_name(${PROJECT_NAME} "main")
+pico_set_program_version(${PROJECT_NAME} "0.1")
 
-pico_enable_stdio_uart(main 1)
-pico_enable_stdio_usb(main 0)
+pico_enable_stdio_uart(${PROJECT_NAME} 1)
+pico_enable_stdio_usb(${PROJECT_NAME} 0)
 
 # Add the standard library to the build
-target_link_libraries(main pico_stdlib)
+target_link_libraries(${PROJECT_NAME} pico_stdlib)
 
 # Add any user requested libraries
-target_link_libraries(main
+target_link_libraries(${PROJECT_NAME}
         hardware_adc
         hardware_spi
         hardware_i2c
@@ -136,14 +136,14 @@ target_link_libraries(main
 
 
 if (DEFINED PICO_PLATFORM AND PICO_PLATFORM STREQUAL "rp2350-arm-s")
-	target_compile_definitions(main PRIVATE
+	target_compile_definitions(${PROJECT_NAME} PRIVATE
                 USE_AUDIO_I2S=1
                 PICO_USE_SW_SPIN_LOCKS=1
                 PICO_AUDIO_I2S_DATA_PIN=26
                 PICO_AUDIO_I2S_CLOCK_PIN_BASE=27	 
 		)
 else()
-	target_compile_definitions(main PRIVATE
+	target_compile_definitions(${PROJECT_NAME} PRIVATE
                 USE_AUDIO_I2S=1
                 PICO_AUDIO_I2S_DATA_PIN=26
                 PICO_AUDIO_I2S_CLOCK_PIN_BASE=27
@@ -151,14 +151,14 @@ else()
 endif()
 
 
-target_link_options(main PRIVATE
+target_link_options(${PROJECT_NAME} PRIVATE
         -Xlinker --print-memory-usage
 )
 
 file(GLOB files "${CMAKE_CURRENT_LIST_DIR}/piosrc/*.pio")
 foreach(file ${files})
     message ("Adding ${file} to PIO build.")
-    pico_generate_pio_header(main ${file})
+    pico_generate_pio_header(${PROJECT_NAME} ${file})
 endforeach()
 
 add_compile_options("-Wall" "-Wredundant-decls")
@@ -166,4 +166,4 @@ add_compile_options("-Wall" "-Wredundant-decls")
 pico_enable_stdio_usb(${PROJECT_NAME} 0)    # 0: disable, 1: enable
 pico_enable_stdio_uart(${PROJECT_NAME} 1)   # 0: disable, 1: enable
 
-pico_add_extra_outputs(main)
+pico_add_extra_outputs(${PROJECT_NAME})
