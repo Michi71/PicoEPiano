@@ -68,6 +68,7 @@ pico_set_boot_stage2(${PROJECT_NAME} slower_boot2)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include ${CMAKE_CURRENT_BINARY_DIR} ".")
 
+add_subdirectory(src)
 add_subdirectory(lib/audio)
 add_subdirectory(lib/encoder)
 add_subdirectory(lib/u8g2)
