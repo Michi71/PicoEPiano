@@ -1,8 +1,8 @@
 #include "pico_hw.h"
 #include "project_config.h"
 
-#include <hardware/structs/qmi.h>
-#include <hardware/structs/xip.h>
+// #include <hardware/structs/qmi.h>
+// #include <hardware/structs/xip.h>
 #include <hardware/sync.h>
 
 #define clockspeed 402000
