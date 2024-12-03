@@ -1,11 +1,19 @@
+#pragma GCC optimize("Ofast")
+#include <pico/time.h>
+#include "hardware/clocks.h"
+#include <pico/stdlib.h>
+#include <hardware/vreg.h>
+#include <pico/multicore.h>
+
 #include "pico_hw.h"
 #include "project_config.h"
 
-// #include <hardware/structs/qmi.h>
-// #include <hardware/structs/xip.h>
-#include <hardware/sync.h>
-
-#define clockspeed 402000
+#if PICO_RP2040
+#include "../../memops_opt/memops_opt.h"
+#else
+#include <hardware/structs/qmi.h>
+#include <hardware/structs/xip.h>
+#endif
 
 uint8_t u8x8_byte_pico_hw_i2c(u8x8_t *u8x8, uint8_t msg, uint8_t arg_int, void *arg_ptr)
 {
@@ -51,88 +59,38 @@ uint8_t u8x8_gpio_and_delay_pico(u8x8_t *u8x8, uint8_t msg,uint8_t arg_int, void
   return 1;
 }
 
-
-void __no_inline_not_in_flash_func(init_flash_frequency)() {
-	uint32_t interrupt_state = save_and_disable_interrupts();
-
-	qmi_hw->m[0].timing = 1 << QMI_M0_TIMING_COOLDOWN_LSB |
-	                      2 << QMI_M0_TIMING_RXDELAY_LSB |
-	                      3 << QMI_M0_TIMING_CLKDIV_LSB;   // <----- CLOCK DIVISOR HERE
-	qmi_hw->m[0].rcmd =
-		0xEB << QMI_M0_RCMD_PREFIX_LSB /* | 0xA0 << QMI_M0_RCMD_SUFFIX_LSB*/;
-
-	// dummy read
-	*reinterpret_cast<volatile char *>(XIP_NOCACHE_NOALLOC_BASE);
-
-	restore_interrupts(interrupt_state);
-}
-
 void pico_init()
 {
-        // Overclock the CPU to 402 MHz.
-        /*vreg_set_voltage(VREG_VOLTAGE_1_30);
-        sleep_ms(100);
-        set_sys_clock_khz(366000, true);
-	clock_configure(clk_peri,
-                    0,
-                    CLOCKS_CLK_PERI_CTRL_AUXSRC_VALUE_CLK_SYS,
-                    366000,
-                    366000);*/
+#if PICO_RP2350
+    volatile uint32_t *qmi_m0_timing=(uint32_t *)0x400d000c;
+    vreg_disable_voltage_limit();
+    vreg_set_voltage(VREG_VOLTAGE_1_60);
+    sleep_ms(10);
+    *qmi_m0_timing = 0x60007204;
+    set_sys_clock_hz(444000000, 0);
+    *qmi_m0_timing = 0x60007303;
+#else
+    memcpy_wrapper_replace(NULL);
+    hw_set_bits(&vreg_and_chip_reset_hw->vreg, VREG_AND_CHIP_RESET_VREG_VSEL_BITS);
+    sleep_ms(33);
+    set_sys_clock_khz(402 * 1000, true);
+#endif
 
-	/*vreg_set_voltage(VREG_VOLTAGE_1_30);
-	sleep_ms(10);
-	set_sys_clock_khz(402000, true);*/
+    // Initialize TinyUSB
+    board_init();
+    tusb_init();
+    stdio_init_all();
 
-	// A0 SDK won't pick up on the PICO_EMBED_XIP_SETUP flag, so just to make sure:
-	/*hw_write_masked(
-		&qmi_hw->m[0].timing,
-		3 << QMI_M0_TIMING_RXDELAY_LSB | 2 << QMI_M0_TIMING_CLKDIV_LSB,
-		QMI_M0_TIMING_RXDELAY_BITS | QMI_M0_TIMING_CLKDIV_BITS
-	);*/
-        //init_flash_frequency ();
-        /*vreg_disable_voltage_limit ();
-        vreg_set_voltage(VREG_VOLTAGE_1_40);
-        sleep_ms(10);
-        set_sys_clock_khz(clockspeed, false);
+    // LED on GPIO25
+    gpio_init(PIN_LED);
+    gpio_set_dir(PIN_LED, GPIO_OUT);
 
-	qmi_hw->m[0].timing = 0x40000204;*/
+    uint32_t rand_seed;
+    for (int i = 0; i < 32; i++)
+    {
+        bool randomBit = rosc_hw->randombit;
+        rand_seed = rand_seed | (randomBit << i);
+    }
 
-	    /* NOTE: DO NOT MODIFY THIS BLOCK */
-#define CPU_SPEED_MHZ (DEFAULT_SYS_CLK_KHZ / 1000)
-        if(CPU_SPEED_MHZ > 266 && CPU_SPEED_MHZ <= 360)
-            vreg_set_voltage(VREG_VOLTAGE_1_20);
-        else if (CPU_SPEED_MHZ > 360 && CPU_SPEED_MHZ <= 396)
-            vreg_set_voltage(VREG_VOLTAGE_1_25);
-        else if (CPU_SPEED_MHZ > 396)
-            vreg_set_voltage(VREG_VOLTAGE_MAX);
-        else
-            vreg_set_voltage(VREG_VOLTAGE_DEFAULT);
-
-        set_sys_clock_khz(CPU_SPEED_MHZ * 1000, true);
-        clock_configure(clk_peri,
-                        0,
-                        CLOCKS_CLK_PERI_CTRL_AUXSRC_VALUE_CLK_SYS,
-                        CPU_SPEED_MHZ * MHZ,
-                        CPU_SPEED_MHZ * MHZ);
-    
-        // Initialize TinyUSB
-        board_init();
-        tusb_init();
-        stdio_init_all();
-	
-        // LED on GPIO25
-        gpio_init(PIN_LED);
-        gpio_set_dir(PIN_LED, GPIO_OUT);
-
-	gpio_set_function(47, GPIO_FUNC_XIP_CS1); // CS for PSRAM
-	xip_ctrl_hw->ctrl|=XIP_CTRL_WRITABLE_M1_BITS;
-	
-        uint32_t rand_seed;
-        for (int i = 0; i < 32; i++)
-        {
-                bool randomBit = rosc_hw->randombit;
-                rand_seed = rand_seed | (randomBit << i);
-        }
-
-        srand(rand_seed);
+    srand(rand_seed);
 }
