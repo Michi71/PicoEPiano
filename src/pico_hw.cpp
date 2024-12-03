@@ -9,7 +9,7 @@
 #include "project_config.h"
 
 #if PICO_RP2040
-#include "../../memops_opt/memops_opt.h"
+// #include "../../memops_opt/memops_opt.h"
 #else
 #include <hardware/structs/qmi.h>
 #include <hardware/structs/xip.h>
