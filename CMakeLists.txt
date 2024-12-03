@@ -39,7 +39,8 @@ add_subdirectory(lib/audio)
 add_subdirectory(lib/encoder)
 add_subdirectory(lib/u8g2)
 
-add_compile_options(-flto -fwhole-program -ffast-math -ffunction-sections -fdata-sections -fms-extensions -O2)
+# add_compile_options(-flto -fwhole-program -ffast-math -ffunction-sections -fdata-sections -fms-extensions -O2)
+add_compile_options(-fwhole-program -ffast-math -ffunction-sections -fdata-sections -fms-extensions -O2)
 
 add_compile_options(-Wall
         -Wno-format          # int != int32_t as far as the compiler is concerned because gcc has int32_t as long int
