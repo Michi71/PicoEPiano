@@ -7,11 +7,11 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(PICO_EXTRAS_PATH "../lib/pico-extras")
 
-# set(PICO_PLATFORM "rp2040")
-# set(PICO_BOARD waveshare_rp2040_plus_16mb)
+set(PICO_PLATFORM "rp2040")
+set(PICO_BOARD waveshare_rp2040_plus_16mb)
 
-set(PICO_PLATFORM "rp2350-arm-s") 
-set(PICO_BOARD "solderparty_rp2350_stamp_xl")
+# set(PICO_PLATFORM "rp2350-arm-s") 
+# set(PICO_BOARD "solderparty_rp2350_stamp_xl")
 # set(PICO_BOARD "sparkfun_promicro_rp2350")
 
 set(FREERTOS_KERNEL_PATH "${CMAKE_CURRENT_SOURCE_DIR}/lib/FreeRTOS-Kernel")
