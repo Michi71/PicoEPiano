@@ -1,4 +1,4 @@
-# WARNING: Work in Progress ![Github Build Status](https://github.com/Michi71/PicoEPiano/actions/workflows/build.yml/badge.svg)
+# WARNING: Work in Progress ![Github Build Status](https://github.com/Michi71/PicoEPiano/actions/workflows/build_cmake.yml/badge.svg)
 
 This Repository is a work in progress and may not build or compile. It does not yet contain key information such as schematic diagrams or hardware information and makes no garantees about the fitness or quality of the code.
 
